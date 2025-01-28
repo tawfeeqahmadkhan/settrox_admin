@@ -136,7 +136,7 @@ const Orders = () => {
       <PageTitle>{t("Orders")}</PageTitle>
 
       <AnimatedContent>
-        <Card className="min-w-0 shadow-xs overflow-x-auto bg-white dark:bg-gray-800 mb-5">
+        <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
           <CardBody>
             <form onSubmit={handleSubmitForAll}>
               <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-5 py-2">
@@ -305,7 +305,7 @@ const Orders = () => {
                 <TableCell>{t("CustomerName")}</TableCell>
                 <TableCell>{t("MethodTbl")}</TableCell>
                 <TableCell>{t("AmountTbl")}</TableCell>
-                <TableCell>{t("OrderStatusTbl")}</TableCell>
+                <TableCell>{t("OderStatusTbl")}</TableCell>
                 <TableCell>{t("ActionTbl")}</TableCell>
                 <TableCell className="text-right">{t("InvoiceTbl")}</TableCell>
               </tr>

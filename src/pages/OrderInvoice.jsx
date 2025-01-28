@@ -20,24 +20,21 @@ import Status from "@/components/table/Status";
 import OrderServices from "@/services/OrderServices";
 import Invoice from "@/components/invoice/Invoice";
 import Loading from "@/components/preloader/Loading";
-import logoDark from "@/assets/img/logo/logo-dark.png";
+import logoDark from "@/assets/img/logo/logo-dark.svg";
+import logoLight from "@/assets/img/logo/logo-color.svg";
 import PageTitle from "@/components/Typography/PageTitle";
 import useUtilsFunction from "@/hooks/useUtilsFunction";
 import InvoiceForDownload from "@/components/invoice/InvoiceForDownload";
-import { useLocation } from 'react-router-dom';
+
 const OrderInvoice = () => {
   const { t } = useTranslation();
   const { mode } = useContext(WindmillContext);
   const { id } = useParams();
   const printRef = useRef();
 
-  const location = useLocation();
-  const data = location.state?.orderData;
-  const loading = false;
-  const error =null;
-  console.log(data);
-  
-
+  const { data, loading, error } = useAsync(() =>
+    OrderServices.getOrderById(id)
+  );
 
   const {
     currency,
@@ -64,16 +61,16 @@ const OrderInvoice = () => {
                   {t("InvoiceStatus")}
                   <span className="pl-2 font-medium text-xs capitalize">
                     {" "}
-                    <Status status={data?.status} />
+                    <Status status={data.status} />
                   </span>
                 </p>
               </h1>
               <div className="lg:text-right text-left">
                 <h2 className="lg:flex lg:justify-end text-lg font-serif font-semibold mt-4 lg:mt-0 lg:ml-0 md:mt-0">
                   {mode === "dark" ? (
-                    <img src={logoDark} alt="setterox" width="110" />
+                    <img src={logoDark} alt="kachabazar" width="110" />
                   ) : (
-                    <img src={logoDark} alt="setterox" width="110" />
+                    <img src={logoLight} alt="kachabazar" width="110" />
                   )}
                 </h2>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
@@ -90,7 +87,7 @@ const OrderInvoice = () => {
                   {t("InvoiceDate")}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 block">
-                  {data?.createdAt?.slice(0,10)}
+                  {showDateFormat(data?.createdAt)}
                 </span>
               </div>
               <div className="mb-3 md:mb-0 lg:mb-0 flex flex-col">
@@ -98,7 +95,7 @@ const OrderInvoice = () => {
                   {t("InvoiceNo")}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 block">
-                  #{data?._id?.toUpperCase()}
+                  #{data?.invoice}
                 </span>
               </div>
               <div className="flex flex-col lg:text-right text-left">
@@ -106,14 +103,14 @@ const OrderInvoice = () => {
                   {t("InvoiceTo")}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 block">
-                  {data?.shipAddressId?.name} <br />
-                  {data?.shipAddressId?.email}{" "}
-                  <span className="ml-2">{data?.shipAddressId?.contact}</span>
+                  {data?.user_info?.name} <br />
+                  {data?.user_info?.email}{" "}
+                  <span className="ml-2">{data?.user_info?.contact}</span>
                   <br />
-                  {data?.shipAddressId?.address?.substring(0, 30)}
+                  {data?.user_info?.address?.substring(0, 30)}
                   <br />
-                  {data?.shipAddressId?.city}, {data?.shipAddressId?.country},{" "}
-                  {data?.shipAddressId?.zipCode}
+                  {data?.user_info?.city}, {data?.user_info?.country},{" "}
+                  {data?.user_info?.zipCode}
                 </span>
               </div>
             </div>
@@ -135,7 +132,7 @@ const OrderInvoice = () => {
                       {t("Quantity")}
                     </TableCell>
                     <TableCell className="text-center">
-                      { data.status == 'preOrder' ? 'preOrder Price': t("ItemPrice")}
+                      {t("ItemPrice")}
                     </TableCell>
                     <TableCell className="text-right">{t("Amount")}</TableCell>
                   </tr>
@@ -158,7 +155,7 @@ const OrderInvoice = () => {
                   {t("InvoicepaymentMethod")}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 font-semibold font-serif block">
-                  {data?.method}
+                  {data.paymentMethod}
                 </span>
               </div>
               <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
@@ -167,7 +164,7 @@ const OrderInvoice = () => {
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 font-semibold font-serif block">
                   {currency}
-                  {getNumberTwo(data?.shippingCost) || 0}
+                  {getNumberTwo(data.shippingCost)}
                 </span>
               </div>
               <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
@@ -176,7 +173,7 @@ const OrderInvoice = () => {
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 font-semibold font-serif block">
                   {currency}
-                  {getNumberTwo(data?.discountPrice)}
+                  {getNumberTwo(data.discount)}
                 </span>
               </div>
               <div className="flex flex-col sm:flex-wrap">
@@ -185,8 +182,7 @@ const OrderInvoice = () => {
                 </span>
                 <span className="text-xl font-serif font-bold text-red-500 dark:text-blue-500 block">
                   {currency}
-                  {getNumberTwo(data?.totalPrice
-)}
+                  {getNumberTwo(data.total)}
                 </span>
               </div>
             </div>

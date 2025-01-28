@@ -4,20 +4,17 @@ const Status = ({ status }) => {
   return (
     <>
       <span className="font-serif">
-        {(status === "pending" || status === "Inactive") && (
+        {(status === "Pending" || status === "Inactive") && (
           <Badge type="warning">{status}</Badge>
         )}
-        {status === "shipped" && (
+        {status === "Waiting for Password Reset" && (
           <Badge type="warning">{status}</Badge>
         )}
-        {status === "preOrder" && (
-          <Badge type="primary">{status}</Badge>
-        )}
-        {status === "processing" && <Badge>{status}</Badge>}
-        {(status === "delivered" || status === "Active") && (
+        {status === "Processing" && <Badge>{status}</Badge>}
+        {(status === "Delivered" || status === "Active") && (
           <Badge type="success">{status}</Badge>
         )}
-        {status === "cancelled" && <Badge type="danger">{status}</Badge>}
+        {status === "Cancel" && <Badge type="danger">{status}</Badge>}
         {status === `POS-Completed` && (
           <Badge className="dark:bg-teal-900 bg-teal-100">{status}</Badge>
         )}

@@ -39,7 +39,7 @@ import AttributeOptionTwo from "@/components/attribute/AttributeOptionTwo";
 import AttributeListTable from "@/components/attribute/AttributeListTable";
 import SwitchToggleForCombination from "@/components/form/switch/SwitchToggleForCombination";
 import ParentBrand from "../brand/ParentCategory";
-import "react-quill/dist/quill.snow.css";
+
 import SpecificationServices from "@/services/SpecificationServices";
 import { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
@@ -267,22 +267,16 @@ const ProductDrawer = ({ id }) => {
                   <Error errorName={errors.title} />
                 </div>
               </div>
-      {/* Product Description */}
+             {/* Product Description */}
       <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
         <LabelArea label="Product Description" />
         <div className="col-span-8 sm:col-span-4">
-          <ReactQuill
-            value={description}
-            onChange={handleDescriptionChange}
+          <Input
+            {...register("description", { required: "Description is required!" })}
+            name="description"
+            type="text"
             placeholder="Product Description"
-            modules={{
-              toolbar: [
-                ["bold", "italic", "underline", "strike"], // Formatting
-                ["blockquote", "code-block"], // Block styles
-                [{ list: "ordered" }, { list: "bullet" }], // Lists
-                [{ header: [1, 2, 3, false] }], // Headers
-              ],
-            }}
+            onChange={(e) => handleDescriptionChange(e.target.value)}
           />
           <Error errorName={errors.description} />
         </div>
@@ -291,23 +285,17 @@ const ProductDrawer = ({ id }) => {
       {/* Product Feature */}
       <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
         <LabelArea label="Product Feature" />
-        <div className="col-span-8 sm:col-span-4 ">
-          <ReactQuill
-            value={ product_feature}
-            onChange={handleProductFeatureChange}
+        <div className="col-span-8 sm:col-span-4">
+          <Input
+            {...register("product_feature", { required: "Product feature is required!" })}
+            name="product_feature"
+            type="text"
             placeholder="Product Feature"
-            modules={{
-              toolbar: [
-                ["bold", "italic", "underline", "strike"],
-                ["blockquote", "code-block"],
-                [{ list: "ordered" }, { list: "bullet" }],
-                [{ header: [1, 2, 3, false] }],
-              ],
-            }}
+            onChange={(e) => handleProductFeatureChange(e.target.value)}
           />
           <Error errorName={errors.product_feature} />
         </div>
-              </div>
+      </div>
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <LabelArea label={t("ProductImage")} />
                 <div className="col-span-8 sm:col-span-4">
@@ -651,8 +639,8 @@ const ProductDrawer = ({ id }) => {
           )}
 
 
-          {tapValue !== "Combination" && <DrawerButton id={id} title="Product" isSubmitting={isSubmitting} />}
-
+{tapValue !== "Combination" &&  <DrawerButton id={id} title="Product" isSubmitting={isSubmitting} />}
+        
         </form>
         {tapValue === "Shipping Info" && (
           <div className="px-6 pt-2 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
@@ -735,9 +723,9 @@ const ProductDrawer = ({ id }) => {
           </div>
         )}
 
-        {tapValue == "Combination" && (
-          <ProductVariation id={id} />
-        )}
+{tapValue == "Combination" &&(
+  <ProductVariation id ={id}/>
+)}
 
       </Scrollbars>
     </>

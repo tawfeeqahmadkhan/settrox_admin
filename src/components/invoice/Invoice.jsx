@@ -5,7 +5,7 @@ const Invoice = ({ data, currency, getNumberTwo }) => {
   return (
     <>
       <TableBody className="bg-white dark:bg-gray-800 divide-y divide-gray-100 text-serif text-sm ">
-        {data?.products.map((item, i) => (
+        {data?.cart?.map((item, i) => (
           <TableRow key={i} className="dark:border-gray-700 dark:text-gray-400">
             <TableCell className="px-6 py-1 whitespace-nowrap font-normal text-gray-500 text-left">
               {i + 1}{" "}
@@ -29,7 +29,7 @@ const Invoice = ({ data, currency, getNumberTwo }) => {
 
             <TableCell className="px-6 py-1 whitespace-nowrap text-right font-bold text-red-500 dark:text-blue-500">
               {currency}
-              {getNumberTwo(item.price*item.quantity)}
+              {getNumberTwo(item.itemTotal)}
             </TableCell>
           </TableRow>
         ))}

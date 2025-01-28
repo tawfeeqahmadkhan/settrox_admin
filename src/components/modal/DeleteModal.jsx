@@ -19,12 +19,15 @@ import AttributeServices from "@/services/AttributeServices";
 import CurrencyServices from "@/services/CurrencyServices";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import BrandServices from "@/services/BrandServices";
-
-const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
+import BannerServices from "@/services/BannerServices";
+import FeaturedProductServices from "@/services/FeaturedProductServices";
+import FlashSaleServices from "@/services/FlashSaleServices";
+import MostPurchasedProductsService from "@/services/MostPurchasedProductsService";
+import RoleServices from "@/services/RoleServices";
+const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId, siteSettingsSection }) => {
   const { isModalOpen, closeModal, setIsUpdate } = useContext(SidebarContext);
   const { setServiceId } = useToggleDrawer();
   const location = useLocation();
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleDelete = async () => {
@@ -100,7 +103,7 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           setServiceId();
           setIsSubmitting(false);
         }
-      } 
+      }
       if (location.pathname === "/categories" || category) {
         if (ids) {
           //  console.log('delete modal categorices',ids)
@@ -128,8 +131,7 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           setServiceId();
           setIsSubmitting(false);
         }
-      } 
-      else if (
+      } else if (
         location.pathname === `/categories/${useParamId}` ||
         category
       ) {
@@ -160,7 +162,7 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           closeModal();
           setIsSubmitting(false);
         } else {
-          console.log("id",id);
+          console.log("id", id);
           if (id === undefined || !id) {
             notifyError("Please select a brand first!");
             setIsSubmitting(false);
@@ -173,7 +175,6 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           setIsSubmitting(false);
           closeModal();
           //setBrandId();
-          
         }
       } else if (location.pathname === `/brand/${useParamId}` || category) {
         // console.log('delete modal')
@@ -182,7 +183,7 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           setIsSubmitting(false);
           return closeModal();
         }
-      
+
         const res = await BrandServices.deleteBrand(id);
         setIsUpdate(true);
         notifySuccess(res.message);
@@ -190,7 +191,7 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
         setBrandId();
         setIsSubmitting(false);
       }
-      
+
       if (location.pathname === "/customers") {
         const res = await CustomerServices.deleteCustomer(id);
         setIsUpdate(true);
@@ -298,10 +299,68 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           setIsSubmitting(false);
         }
       }
+
+      
+
+      if(location.pathname === "/settings/home"){
+        if(siteSettingsSection==="Banners"){
+          const res = await BannerServices.deleteBanner(id);
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        }
+        if(siteSettingsSection==="Featured Products"){
+          const res = await FeaturedProductServices.deleteFeaturedProduct(id);
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        }
+        if(siteSettingsSection==="Flash Sales"){
+          const res = await FlashSaleServices.deleteFlashSale(id);
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        }
+        if(siteSettingsSection==="Most Purchased Products"){
+          const res = await MostPurchasedProductsService.deleteMostPurchasedProduct(id);
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        }
+      }
+      console.log("location.pathname", location.pathname);
+      
+      if(location.pathname==="/roles-and-permissions"){
+        const res = await RoleServices.deleteRole(id);
+        setIsUpdate(true);
+        notifySuccess(res.message);
+        setServiceId();
+        closeModal();
+        setIsSubmitting(false);
+        
+      }
+
+      if(location.pathname==="/manage-users"){
+        const res = await AdminServices.deleteStaff(id);
+        setIsUpdate(true);
+        notifySuccess(res.message);
+        setServiceId();
+        closeModal();
+        setIsSubmitting(false);
+      }
+
     } catch (err) {
-      console.log(err?.message);
+      console.log(err);
       console.log("Stack trace:", err?.stack);
-      notifyError(err ? err?.response?.data?.message : err?.message);
+      notifyError(err ? err?.response?.data?.message : err?.message || "Something went wrong");
       setServiceId();
       setIsCheck([]);
       closeModal();

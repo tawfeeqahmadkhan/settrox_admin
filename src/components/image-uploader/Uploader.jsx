@@ -120,7 +120,7 @@ const {imageupload}=useBrandSubmit()
           data: formData,
         })
           .then((res) => { 
-            notifySuccess("Image Uploaded successfully!");
+            notifySuccess(`${fileType==="image"?"Image":"Video"} Uploaded successfully!`);
             setLoading(false);
             setbtladoing(false)
             if (product) {
@@ -206,8 +206,18 @@ const {imageupload}=useBrandSubmit()
         <span className="mx-auto flex justify-center">
           <FiUploadCloud className="text-3xl text-blue-500" />
         </span>
-        <p className="text-sm mt-2">{t("DragYourImage")}</p>
-        <em className="text-xs text-gray-400">{t("imageFormat")}</em>
+        {fileType==="image"?(
+          <p className="text-sm mt-2">{t("DragYourImage")}</p>
+        ):(
+          <p className="text-sm mt-2">{t("Drag Your Video here")}</p>
+        )}
+
+        {fileType==="image" ? (
+          <em className="text-xs text-gray-400">{t("imageFormat")}</em>
+
+        ):(
+          <em className="text-xs text-gray-400">{t("(Only *.mp4, *.avi and *.mov videos will be accepted)")}</em>
+        )}
       </div>
 
       <div className="text-blue-500">{loading && err}</div>
@@ -223,11 +233,20 @@ const {imageupload}=useBrandSubmit()
         ) : !product && imageUrl ? (
           <div className="relative">
             {" "}
-            <img
-              className="inline-flex border rounded-md border-gray-100 dark:border-gray-600 w-24 max-h-24 p-2"
-              src={imageUrl}
-              alt="product"
-            />
+            {fileType==="image" ? (
+              <img
+                className="inline-flex border rounded-md border-gray-100 dark:border-gray-600 w-24 max-h-24 p-2"
+                src={imageUrl}
+                alt="product"
+              />
+            ):(
+              <video
+                className="inline-flex border rounded-md border-gray-100 dark:border-gray-600 w-24 max-h-24 p-2"
+                src={imageUrl}
+                controls
+              />
+            )}
+        
             <button
               type="button"
               className="absolute top-0 right-0 text-red-500 focus:outline-none"

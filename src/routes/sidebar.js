@@ -7,6 +7,8 @@ import {
   FiSlack,
   FiGlobe,
   FiTarget,
+  FiChrome,
+  FiUserPlus
 } from "react-icons/fi";
 
 /**
@@ -49,6 +51,46 @@ const sidebar = [
         path: "/attributes",
         name: "Attributes",
       },
+      // {
+      //   path: "/coupons",
+      //   name: "Coupons",
+      // },
+    ],
+  },
+  {
+    icon: FiChrome,
+    name: "Site Settings",
+    routes: [
+      {
+        path: "/settings/home",
+        name: "Home Page",
+      },
+      // {
+      //   path: "/",
+      //   name: "Attributes",
+      // },
+      // {
+      //   path: "/coupons",
+      //   name: "Coupons",
+      // },
+    ],
+  },
+  {
+    icon: FiUserPlus,
+    name: "Manage Admin Users",
+    routes: [
+      {
+        path: "/roles-and-permissions", 
+        name: "Roles & Permissions",
+      },
+      {
+        path: "/manage-users", 
+        name: "Manage Users",
+      },
+      // {
+      //   path: "/",
+      //   name: "Attributes",
+      // },
       // {
       //   path: "/coupons",
       //   name: "Coupons",

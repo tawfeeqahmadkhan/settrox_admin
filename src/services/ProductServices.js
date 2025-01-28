@@ -29,12 +29,6 @@ const ProductServices = {
   addVariantProduct: async ({id,data}) => {
     return requests.put(`/products/new/variant/${id}`, data);
   },
-  updateVariantProduct: async ({productId,data}) => {
-    return requests.put(`/products/update/variant/${productId}`, data);
-  },
-  deleteVariantProduct: async ({productId,variantId}) => {
-    return requests.delete(`/products/delete/variant/${productId}/${variantId}`);
-  },
   updateStatus: async (id, body) => {
     return requests.put(`/products/status/${id}`, body);
   },

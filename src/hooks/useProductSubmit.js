@@ -306,7 +306,9 @@ const useProductSubmit = (id) => {
       setSelectedSpecifications([]);
       setSelectedBrand([]);
       setDefaultCategory([]);
-  
+      if (location.pathname === "/products") {
+        resetRefTwo?.current?.resetSelectedValues();
+      }
 
       clearErrors("sku");
       clearErrors("meta_title");
@@ -570,6 +572,17 @@ const useProductSubmit = (id) => {
     // );
   };
 
+  //for clear selected combination
+  const handleClearVariant = () => {
+    setVariants([]);
+    setVariant([]);
+    setValues({});
+    resetRef?.current?.map(
+      async (v, i) => await resetRef?.current[i]?.resetSelectedValues()
+    );
+
+    // console.log('value', selectedList, removedItem, resetRef.current);
+  };
 
   //for edit combination values
   const handleEditVariant = (variant) => {
@@ -831,6 +844,7 @@ const useProductSubmit = (id) => {
     handleIsCombination,
     handleEditVariant,
     handleRemoveVariant,
+    handleClearVariant,
     handleQuantityPrice,
     handleSelectImage,
     handleSelectInlineImage,
