@@ -16,7 +16,6 @@ const OrderTable = ({ orders }) => {
   // console.log('globalSetting',globalSetting)
   const { t } = useTranslation();
   const { showDateTimeFormat, currency, getNumberTwo } = useUtilsFunction();
-console.log(orders,'-------');
 
   // console.log('orders',orders)
 
@@ -66,11 +65,8 @@ console.log(orders,'-------');
               <div className="flex justify-between items-center">
                 <PrintReceipt orderId={order._id} />
 
-                <span className="p-2 cursor-pointer text-gray-400 hover:text-blue-600" >
-                  <Link to={{
-  pathname: `/order/${order._id}`,
-  state: { orderData: order} 
-}}>
+                <span className="p-2 cursor-pointer text-gray-400 hover:text-blue-600">
+                  <Link to={`/order/${order._id}`}>
                     <Tooltip
                       id="view"
                       Icon={FiZoomIn}

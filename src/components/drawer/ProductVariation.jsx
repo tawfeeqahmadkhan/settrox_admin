@@ -10,14 +10,25 @@ import useUtilsFunction from '@/hooks/useUtilsFunction';
 import AttributeOptionTwo from '../attribute/AttributeOptionTwo';
 import ProductServices from '@/services/ProductServices';
 import VariantTable from './VariantTable';
-import { notifySuccess } from '@/utils/toast';
 export default function ProductVariation({id}) {
   const {
-    handleProductTap,
+   
     values,
     language,
+    register,
+    onSubmit,
+    errors,
+    slug,
+    openModal,
     attribue,
     setValues,
+    variants,
+    imageUrl,
+    setImageUrl,
+    videoUrlFeature,
+    setVideoUrlFeature,
+    handleSubmit,
+    isCombination,
     variantTitle,
     attributes,
     attTitle,
@@ -30,16 +41,14 @@ export default function ProductVariation({id}) {
     const handleClearVariant = ()=>{
     }
     const { currency, showingTranslateValue } = useUtilsFunction();
-    const [variantData,setVariantData] = useState([]);
-    const [handleSubmitVariantref,setHandleSubmitVariantref] = useState(false);
+    const [variantData,setVariantData] = useState([])
     const handleSubmitVariant = async() => {
     const res = await ProductServices.addVariantProduct({id,data:variantData});
-    if(res.success){
-      setHandleSubmitVariantref(!handleSubmitVariantref)
-    }
-    notifyError(notifySuccess('Somethin is wrong'))     
+
+    // console.log(v);
+     
     };
-    const [primaryIndex, setPrimaryIndex] = useState(0)
+    const [primaryIndex, setPrimaryIndex] = useState(null)
   return (
     <div>
                   {
@@ -123,7 +132,7 @@ export default function ProductVariation({id}) {
                 </div>
               </div>
             ))}
-            <VariantTable id={id} handleSubmitVariantref={handleSubmitVariantref} />
+            <VariantTable id={id} />
     </div>
   )
 }

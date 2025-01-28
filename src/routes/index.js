@@ -1,3 +1,5 @@
+
+
 import { lazy } from "react";
 
 // use lazy for better code splitting
@@ -26,6 +28,9 @@ const Setting = lazy(() => import("@/pages/Setting"));
 const StoreHome = lazy(() => import("@/pages/StoreHome"));
 const StoreSetting = lazy(() => import("@/pages/StoreSetting"));
 const Notifications = lazy(() => import("@/pages/Notifications"));
+const SiteSettings = lazy(() => import("@/pages/SiteSettings"));
+const RoleSection = lazy(() => import("@/pages/RoleSection"));
+const AdminSection = lazy(() => import("@/pages/AdminSection"));
 /*
 //  * ⚠ These are internal routes!
 //  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -136,6 +141,18 @@ const routes = [
     path: "/notifications",
     component: Notifications,
   },
+  {
+    path:"/settings/home",
+    component:SiteSettings,
+  },
+  {
+    path:"/roles-and-permissions",
+    component:RoleSection,
+  },
+  {
+    path:"/manage-users",
+    component:AdminSection,
+  }
 ];
 
 export default routes;
