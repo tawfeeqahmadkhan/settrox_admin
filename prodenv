@@ -1,0 +1,10 @@
+VITE_APP_API_BASE_URL=https://react.server55.net/api
+VITE_APP_STORE_DOMAIN=https://react.server55.net/latest/admin/
+VITE_APP_API_SOCKET_URL= https://react.server55.net/latest/admin/
+
+
+VITE_APP_CLOUD_NAME=cloud
+VITE_APP_CLOUDINARY_API_KEY=242611225352683
+VITE_APP_CLOUDINARY_API_SECRET=OIa7GtNTrTvjt9xjEoL2HKTO22k
+VITE_APP_CLOUDINARY_UPLOAD_PRESET=ml_default
+VITE_APP_CLOUDINARY_URL=https://api.cloudinary.com/v1_1/dopyogopf/image/upload
